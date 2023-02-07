@@ -1,17 +1,22 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import MainForm from "../components/Form/MainForm";
 import MainInput from "../components/Input/MainInput";
 import MainButton from "../components/Button/MainButton";
 
 const EMAIL_INPUT_ERROR = "이메일에는 @가 포함되어야 합니다.";
 const PASSWORD_INPUT_ERROR = "비밀번호의 길이는 8자 이상이어야 합니다.";
+const REQUEST_URL = "https://pre-onboarding-selection-task.shop";
 
 const Signin = () => {
+  const history = useHistory();
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
 
   const [enteredPassword, setEnteredPassword] = useState("");
   const [enteredPasswordTouched, setEnteredPasswordTouched] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const emailIsValid = enteredEmail.includes("@");
   const emailIsInvalid = !emailIsValid && enteredEmailTouched;
@@ -37,17 +42,46 @@ const Signin = () => {
     setEnteredPasswordTouched(true);
   };
 
-  const loginSubmitHandler = (event) => {
+  const loginSubmitHandler = async (event) => {
     event.preventDefault();
 
-    const loginData = {
+    if (!formIsValid) {
+      return;
+    }
+
+    setLoading(true);
+
+    const signinData = {
       email: enteredEmail,
       password: enteredPassword,
     };
-    console.log(loginData);
+
+    try {
+      const response = await fetch(`${REQUEST_URL}/auth/signin`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(signinData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      } else {
+        const data = await response.json();
+        localStorage.setItem("token",data.access_token);
+        history.replace("/todo");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
 
     setEnteredEmail("");
+    setEnteredEmailTouched(false);
+
     setEnteredPassword("");
+    setEnteredPasswordTouched(false);
+
+    setLoading(false);
   };
   return (
     <>
@@ -78,9 +112,12 @@ const Signin = () => {
           htmlFor="password"
           labelName="password"
         />
-        <MainButton data-testid="signin-button" disabled={!formIsValid}>
-          sign in
-        </MainButton>
+        {loading && <p>loading</p>}
+        {!loading && (
+          <MainButton data-testid="signin-button" disabled={!formIsValid}>
+            sign in
+          </MainButton>
+        )}
       </MainForm>
     </>
   );
