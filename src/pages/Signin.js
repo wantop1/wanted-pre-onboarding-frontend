@@ -6,7 +6,7 @@ import MainButton from "../components/Button/MainButton";
 const EMAIL_INPUT_ERROR = "이메일에는 @가 포함되어야 합니다.";
 const PASSWORD_INPUT_ERROR = "비밀번호의 길이는 8자 이상이어야 합니다.";
 
-const Login = () => {
+const Signin = () => {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
 
@@ -52,12 +52,12 @@ const Login = () => {
   return (
     <>
       <MainForm onSubmit={loginSubmitHandler}>
-        <h1>login</h1>
+        <h1>Sign in</h1>
         <MainInput
           onBlur={emailBlurHandler}
           onChange={emailHandler}
           error={emailIsInvalid}
-          errorMessage = {EMAIL_INPUT_ERROR}
+          errorMessage={EMAIL_INPUT_ERROR}
           value={enteredEmail}
           dataTestid="email-input"
           type="email"
@@ -70,7 +70,7 @@ const Login = () => {
           onBlur={passwordBlurHandler}
           onChange={passwordHandler}
           error={passwordIsInvalid}
-          errorMessage = {PASSWORD_INPUT_ERROR}
+          errorMessage={PASSWORD_INPUT_ERROR}
           value={enteredPassword}
           dataTestid="password-input"
           type="password"
@@ -79,11 +79,11 @@ const Login = () => {
           labelName="password"
         />
         <MainButton data-testid="signin-button" disabled={!formIsValid}>
-          login
+          sign in
         </MainButton>
       </MainForm>
     </>
   );
 };
 
-export default Login;
+export default Signin;

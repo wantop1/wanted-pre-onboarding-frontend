@@ -7,10 +7,10 @@ const MainHeader = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/login">login</Link>
+            <Link to="/signin">Sign in</Link>
           </li>
           <li>
-            <Link to="/signup">signup</Link>
+            <Link to="/signup">Sign up</Link>
           </li>
         </ul>
       </nav>

@@ -7,7 +7,7 @@
 
 ## 과제
 ### 1. 로그인 / 회원가입
-- [ ] /signup 경로에 회원가입 기능을 개발
+- [x] /signup 경로에 회원가입 기능을 개발
 - [ ] /signin 경로에 로그인 기능을 개발
 - [x] 이메일 input에 data-testid="email-input" 속성을 부여
 - [x] 패스워드 input에 data-testid="password-input" 속성을 부여
@@ -19,3 +19,7 @@
   - 이메일 조건: @ 포함
   - 비밀번호 조건: 8자 이상 
 - [x] 입력된 이메일과 비밀번호가 유효성 검사를 통과하지 못한다면 button에 disabled 속성을 부여
+
+
+**Assignment 2**
+- [x] 회원가입 페이지에서 버튼을 클릭 시 회원가입을 진행하고 회원가입이 정상적으로 완료되었을 시 /signin 경로로 이동
