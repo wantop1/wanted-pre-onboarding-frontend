@@ -35,3 +35,18 @@
     padding-bottom: 0.25rem;
     border-bottom: 4px solid #78e08f;
   }
+
+  .header button {
+    font: inherit;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .header button:hover {
+    background-color: #78e08f;
+  }

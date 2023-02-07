@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { useHistory } from "react-router-dom";
-import MainForm from "../components/Form/MainForm";
-import MainInput from "../components/Input/MainInput";
-import MainButton from "../components/Button/MainButton";
+import MainForm from "../components/UI/Form/MainForm";
+import MainInput from "../components/UI/Input/MainInput";
+import MainButton from "../components/UI/Button/MainButton";
+import AuthContext from "../store/auth-context";
+import LoadingSpinner from "../components/UI/Progress/LodingSpinner";
 
 const EMAIL_INPUT_ERROR = "이메일에는 @가 포함되어야 합니다.";
 const PASSWORD_INPUT_ERROR = "비밀번호의 길이는 8자 이상이어야 합니다.";
@@ -10,6 +12,7 @@ const REQUEST_URL = "https://pre-onboarding-selection-task.shop";
 
 const Signin = () => {
   const history = useHistory();
+  const authCtx = useContext(AuthContext);
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
 
@@ -68,8 +71,8 @@ const Signin = () => {
         throw new Error(errorData.message);
       } else {
         const data = await response.json();
-        localStorage.setItem("token",data.access_token);
-        history.replace("/todo");
+        authCtx.login(data.access_token);
+        history.push("/todo");
       }
     } catch (error) {
       alert(error.message);
@@ -112,7 +115,7 @@ const Signin = () => {
           htmlFor="password"
           labelName="password"
         />
-        {loading && <p>loading</p>}
+        {loading && <LoadingSpinner/>}
         {!loading && (
           <MainButton data-testid="signin-button" disabled={!formIsValid}>
             sign in
