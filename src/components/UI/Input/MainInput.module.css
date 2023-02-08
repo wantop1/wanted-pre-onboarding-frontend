@@ -21,3 +21,8 @@
   color: red;
   font-size: small;
 }
+
+.input.inline {
+  display: inline-block;
+  margin : 1rem;
+}

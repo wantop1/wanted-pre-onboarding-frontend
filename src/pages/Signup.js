@@ -113,7 +113,7 @@ const Signup = () => {
         />
         {loading && <LoadingSpinner />}
         {!loading && (
-          <MainButton data-testid="signin-button" disabled={!formIsValid}>
+          <MainButton dataTestid="signup-button" disabled={!formIsValid}>
             sign up
           </MainButton>
         )}

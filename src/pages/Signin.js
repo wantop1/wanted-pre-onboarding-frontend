@@ -117,7 +117,7 @@ const Signin = () => {
         />
         {loading && <LoadingSpinner/>}
         {!loading && (
-          <MainButton data-testid="signin-button" disabled={!formIsValid}>
+          <MainButton dataTestid="signin-button" disabled={!formIsValid}>
             sign in
           </MainButton>
         )}

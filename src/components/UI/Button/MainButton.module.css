@@ -23,3 +23,8 @@
   .button:disabled{
     background-color: #1301014d;
   }
+
+  .button.small {
+    height: 100%;
+    width: 80px;
+  }

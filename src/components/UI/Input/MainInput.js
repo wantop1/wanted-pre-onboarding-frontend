@@ -1,7 +1,7 @@
 import classes from "./MainInput.module.css";
 const MainInput = (props) => {
   return (
-    <div className={classes.input}>
+    <div className={`${classes.input} ${props.inline && classes.inline}`}>
       <label htmlFor={props.htmlFor}>{props.labelName}</label>
       <input
         onBlur={props.onBlur}
