@@ -31,3 +31,9 @@
 **Assignment 4**
 - [x] 로컬 스토리지에 토큰이 있는 상태로 /signin 또는 /signup 페이지에 접속한다면 /todo 경로로 리다이렉트
 - [x] 로컬 스토리지에 토큰이 없는 상태로 /todo페이지에 접속한다면 /signin 경로로 리다이렉트
+
+### 2. TODO LIST
+
+**Assignment 5**
+- [x] /todo경로에 접속하면 투두 리스트의 목록을 볼 수 있도록 하며 목록에서는 TODO의 내용과 완료 여부가 표시
+- [x] TODO의 완료 여부는 ```<input type="checkbox" />```를 통해 표현하고 TODO는 < li > tag를 이용
