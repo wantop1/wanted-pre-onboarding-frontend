@@ -6,6 +6,27 @@ const TodoItem = (props) => {
   const token = localStorage.getItem("token");
   const [checked, setChecked] = useState(props.isCompleted);
   const [error, setError] = useState();
+
+  const deleteTodoHandler = async () => {
+    setError(null);
+
+    try {
+      const response = await fetch(`${REQUEST_URL}/todo/${props.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("delete todo failed!");
+      }
+    } catch (error) {
+      setError(error.message);
+      return;
+    }
+  };
+
   const checkboxHandler = async () => {
     setError(null);
 
@@ -33,11 +54,21 @@ const TodoItem = (props) => {
     <li>
       <label>
         <input onChange={checkboxHandler} type="checkbox" checked={checked} />
-        {props.todo}
-        <span className={`${checked ? classes.checked : ""}`}></span>
+        <span className={`${checked ? classes.checked : ""}`}>
+          {props.todo}
+        </span>
       </label>
-      <MainButton width='small' dataTestid = 'modify-button'>수정</MainButton>
-      <MainButton width='small' dataTestid = 'delete-button'>삭제</MainButton>
+      <MainButton width="small" dataTestid="modify-button">
+        수정
+      </MainButton>
+
+      <MainButton
+        onClick={deleteTodoHandler}
+        width="small"
+        dataTestid="delete-button"
+      >
+        삭제
+      </MainButton>
       <p>{error}</p>
     </li>
   );
