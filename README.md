@@ -43,3 +43,6 @@
  - TODO 입력 input에는 ```data-testid="new-todo-input"``` 속성을 부여
  - TODO 추가 button에는 ```data-testid="new-todo-add-button"``` 속성을 부여
 - [x] 추가 button을 클릭하면 입력 input의 내용이 새로운 TODO로 추가되도록 구현
+
+**Assignment 7**
+- [x] TODO의 체크박스를 통해 완료 여부를 수정할 수 있도록 구현
