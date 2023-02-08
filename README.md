@@ -46,3 +46,8 @@
 
 **Assignment 7**
 - [x] TODO의 체크박스를 통해 완료 여부를 수정할 수 있도록 구현
+
+**Assignment 8**
+- [ ] TODO 우측에 수정버튼과 삭제 버튼 추가
+ - ```수정 버튼에는 data-testid="modify-button" 속성을 부여``` 
+ - ```삭제 버튼에는 data-testid="delete-button" 속성을 부여```

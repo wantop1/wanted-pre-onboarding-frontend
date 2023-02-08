@@ -27,4 +27,5 @@
   .button.small {
     height: 100%;
     width: 80px;
+    margin : 0 0.5rem;
   }
