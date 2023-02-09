@@ -5,7 +5,7 @@ import MainButton from "../UI/Button/MainButton";
 import useHttp from "../../hooks/use-http";
 
 const REQUEST_URL = "https://pre-onboarding-selection-task.shop";
-const CreateTodo = () => {
+const CreateTodo = ({setTodos}) => {
   const token = localStorage.getItem("token");
   const { isLoading, error, sendRequest: postTodo } = useHttp();
   const [enteredTodo, setEnterdTodo] = useState("");
@@ -13,6 +13,10 @@ const CreateTodo = () => {
   const enteredTodoChangeHandler = (event) => {
     setEnterdTodo(event.target.value);
   };
+
+  const renewTodolist = (data)=> {
+    setTodos((prevList)=>[...prevList,data]);
+  }
 
   const addTodoHandler = async () => {
     postTodo({
@@ -23,7 +27,7 @@ const CreateTodo = () => {
         "Content-Type": "application/json",
       },
       body: { todo: enteredTodo },
-    });
+    },renewTodolist);
 
     setEnterdTodo("");
   };

@@ -18,12 +18,9 @@ const useHttp = () => {
         throw new Error("Request failed!");
       }
 
+      const data = await response.json();
+      applyData(data);
       
-      if(requestConfig.method ==='GET'){
-        const data = await response.json();
-        applyData(data);
-      }
-
     } catch (err) {
       setError(err.message || "Something went wrong!");
     }
