@@ -32,6 +32,9 @@ const TodoList = () => {
     });
   }, [token]);
 
+  useEffect(() => {
+  }, [todos]);
+
   const todoList = todos.map((item) => (
     <TodoItem
       key={item.id}
