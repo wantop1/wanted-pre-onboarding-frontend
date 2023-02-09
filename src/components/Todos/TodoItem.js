@@ -6,13 +6,14 @@ const REQUEST_URL = "https://pre-onboarding-selection-task.shop";
 
 const TodoItem = (props) => {
   const token = localStorage.getItem("token");
-  const { error, sendRequest: deleteTodo } = useHttp();
+  const { error: deleteTodoError, sendRequest: deleteTodo } = useHttp();
+  const { error: putTodoError, sendRequest: putToto } = useHttp();
 
   const [checked, setChecked] = useState(props.isCompleted);
   const [editable, setEditable] = useState(false);
   const [todo, setTodo] = useState(props.todo);
 
-  const editTodoHandler = () => {
+  const editHandler = () => {
     if (editable) {
       setChecked(props.isCompleted);
       setTodo(props.todo);
@@ -43,25 +44,59 @@ const TodoItem = (props) => {
   };
 
   const modifyTodohandler = async () => {
-
-    try {
-      const response = await fetch(`${REQUEST_URL}/todos/${props.id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ isCompleted: checked, todo: todo }),
-      });
-
-      if (!response.ok) {
-        throw new Error("modify todo failed!");
-      }
-    } catch (error) {
-
-      return;
-    }
+    putToto({
+      url: `${REQUEST_URL}/todos/${props.id}`,
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      body: { isCompleted: checked, todo: todo },
+    });
   };
+
+  let firstButton, secondButton;
+
+  if (editable) {
+    firstButton = (
+      <MainButton
+        onClick={editHandler}
+        width="small"
+        dataTestid="cancel-button"
+      >
+        취소
+      </MainButton>
+    );
+    secondButton = (
+      <MainButton
+      onClick={modifyTodohandler}
+      width="small"
+      dataTestid="submit-button"
+    >
+      제출
+    </MainButton>
+    );
+  } else {
+    firstButton = (
+      <MainButton
+        onClick={editHandler}
+        width="small"
+        dataTestid="modify-button"
+      >
+        수정
+      </MainButton>
+    );
+    secondButton = (
+      <MainButton
+        onClick={deleteTodoHandler}
+        width="small"
+        dataTestid="delete-button"
+      >
+        삭제
+      </MainButton>
+    );
+  }
+
   return (
     <li>
       <label>
@@ -78,44 +113,9 @@ const TodoItem = (props) => {
           </span>
         )}
       </label>
-
-      {editable ? (
-        <MainButton
-          onClick={editTodoHandler}
-          width="small"
-          dataTestid="cancel-button"
-        >
-          취소
-        </MainButton>
-      ) : (
-        <MainButton
-          onClick={editTodoHandler}
-          width="small"
-          dataTestid="modify-button"
-        >
-          수정
-        </MainButton>
-      )}
-
-      {editable ? (
-        <MainButton
-          onClick={modifyTodohandler}
-          width="small"
-          dataTestid="submit-button"
-        >
-          제출
-        </MainButton>
-      ) : (
-        <MainButton
-          onClick={deleteTodoHandler}
-          width="small"
-          dataTestid="delete-button"
-        >
-          삭제
-        </MainButton>
-      )}
-
-      <p>{error}</p>
+      {firstButton}
+      {secondButton}
+      <p>{deleteTodoError || putTodoError}</p>
     </li>
   );
 };
