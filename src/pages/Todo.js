@@ -26,7 +26,7 @@ const Todo = () => {
   return (
     <>
       <CreateTodo setTodos={setTodos}/>
-      <TodoList todos={todos} error={error} isLoading={isLoading} />
+      <TodoList todos={todos} setTodos={setTodos} error={error} isLoading={isLoading} />
     </>
   );
 };

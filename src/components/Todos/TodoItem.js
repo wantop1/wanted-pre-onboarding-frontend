@@ -4,19 +4,19 @@ import classes from "./TodoItem.module.css";
 import useHttp from "../../hooks/use-http";
 const REQUEST_URL = "https://pre-onboarding-selection-task.shop";
 
-const TodoItem = (props) => {
+const TodoItem = ({ id, todo, isCompleted, setTodos }) => {
   const token = localStorage.getItem("token");
   const { error: deleteTodoError, sendRequest: deleteTodo } = useHttp();
   const { error: putTodoError, sendRequest: putToto } = useHttp();
 
-  const [checked, setChecked] = useState(props.isCompleted);
+  const [checked, setChecked] = useState(isCompleted);
   const [editable, setEditable] = useState(false);
-  const [todo, setTodo] = useState(props.todo);
+  const [enteredTodo, setEnteredTodo] = useState(todo);
 
   const editHandler = () => {
     if (editable) {
-      setChecked(props.isCompleted);
-      setTodo(props.todo);
+      setChecked(isCompleted);
+      setEnteredTodo(todo);
     }
 
     setEditable(!editable);
@@ -30,28 +30,36 @@ const TodoItem = (props) => {
   };
 
   const enteredTodoHandler = (event) => {
-    setTodo(event.target.value);
+    setEnteredTodo(event.target.value);
+  };
+
+  const removeTodoItem = (id) => {
+    setTodos((prevList) => prevList.filter((item) => item.id !== id));
   };
 
   const deleteTodoHandler = async () => {
-    deleteTodo({
-      url: `${REQUEST_URL}/todos/${props.id}`,
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + token,
+    deleteTodo(
+      {
+        url: `${REQUEST_URL}/todos/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
       },
-    });
+      removeTodoItem,
+      id
+    );
   };
 
   const modifyTodohandler = async () => {
     putToto({
-      url: `${REQUEST_URL}/todos/${props.id}`,
+      url: `${REQUEST_URL}/todos/${id}`,
       method: "PUT",
       headers: {
         Authorization: "Bearer " + token,
         "Content-Type": "application/json",
       },
-      body: { isCompleted: checked, todo: todo },
+      body: { isCompleted: checked, todo: enteredTodo },
     });
   };
 
@@ -69,12 +77,12 @@ const TodoItem = (props) => {
     );
     secondButton = (
       <MainButton
-      onClick={modifyTodohandler}
-      width="small"
-      dataTestid="submit-button"
-    >
-      제출
-    </MainButton>
+        onClick={modifyTodohandler}
+        width="small"
+        dataTestid="submit-button"
+      >
+        제출
+      </MainButton>
     );
   } else {
     firstButton = (
@@ -105,11 +113,11 @@ const TodoItem = (props) => {
           <input
             onChange={enteredTodoHandler}
             data-testid="modify-input"
-            value={todo}
+            value={enteredTodo}
           />
         ) : (
           <span className={`${checked ? classes.checked : ""}`}>
-            {props.todo}
+            {enteredTodo}
           </span>
         )}
       </label>
