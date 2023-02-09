@@ -2,46 +2,34 @@ import { useState } from "react";
 import LoadingSpinner from "../UI/Progress/LodingSpinner";
 import MainInput from "../UI/Input/MainInput";
 import MainButton from "../UI/Button/MainButton";
+import useHttp from "../../hooks/use-http";
 
 const REQUEST_URL = "https://pre-onboarding-selection-task.shop";
 const CreateTodo = () => {
   const token = localStorage.getItem("token");
+  const { isLoading, error, sendRequest: postTodo } = useHttp();
   const [enteredTodo, setEnterdTodo] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
 
   const enteredTodoChangeHandler = (event) => {
     setEnterdTodo(event.target.value);
   };
 
   const addTodoHandler = async () => {
-    setError(null);
-    setLoading(true);
-    try {
-      const response = await fetch(`${REQUEST_URL}/todos`, {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ todo: enteredTodo }),
-      });
+    postTodo({
+      url: `${REQUEST_URL}/todos`,
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      body: { todo: enteredTodo },
+    });
 
-      if (!response.ok) {
-        throw new Error("Can not add todo!");
-      }
-    } catch (error) {
-      setError(error.message);
-      setLoading(false);
-    }
-
-    setLoading(false);
     setEnterdTodo("");
   };
-
   return (
     <div>
-      {loading && <LoadingSpinner />}
+      {isLoading && <LoadingSpinner />}
       <MainInput
         value={enteredTodo}
         type="text"
@@ -50,7 +38,7 @@ const CreateTodo = () => {
         labelName="add todo"
         onChange={enteredTodoChangeHandler}
         dataTestid="new-todo-input"
-        inline ={true}
+        inline={true}
       />
       <MainButton
         width="small"

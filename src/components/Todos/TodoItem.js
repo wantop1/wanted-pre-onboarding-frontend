@@ -51,10 +51,7 @@ const TodoItem = (props) => {
   };
 
   const modifyTodohandler = async () => {
-
     setError(null);
-    console.log()
-
     try {
       const response = await fetch(`${REQUEST_URL}/todos/${props.id}`, {
         method: "PUT",
