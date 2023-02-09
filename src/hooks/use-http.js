@@ -23,8 +23,13 @@ const useHttp = () => {
         applyData(data);
       }
 
-      if (requestConfig.method === "DELETE" || requestConfig.method === "PUT") {
+      if (requestConfig.method === "DELETE") {
         applyData(id);
+      }
+
+      if (requestConfig.method === "PUT") {
+        const data = await response.json();
+        applyData(id,data);
       }
     } catch (err) {
       setError(err.message || "Something went wrong!");

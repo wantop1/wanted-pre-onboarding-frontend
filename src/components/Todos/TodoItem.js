@@ -19,7 +19,7 @@ const TodoItem = ({ id, todo, isCompleted, setTodos }) => {
       setEnteredTodo(todo);
     }
 
-    setEditable(!editable);
+    setEditable((editableState)=>!editableState);
   };
 
   const checkboxHandler = () => {
@@ -37,6 +37,18 @@ const TodoItem = ({ id, todo, isCompleted, setTodos }) => {
     setTodos((prevList) => prevList.filter((item) => item.id !== id));
   };
 
+  const modifyTodoItem = (id, data) => {
+    setTodos((prevList) =>
+      prevList.map((item) =>
+        item.id === id
+          ? {...item,isCompleted: data.isCompleted, todo: data.todo }
+          : item
+      )
+    );
+
+    setEditable((editableState)=>!editableState);
+  };
+
   const deleteTodoHandler = async () => {
     deleteTodo(
       {
@@ -52,15 +64,19 @@ const TodoItem = ({ id, todo, isCompleted, setTodos }) => {
   };
 
   const modifyTodohandler = async () => {
-    putToto({
-      url: `${REQUEST_URL}/todos/${id}`,
-      method: "PUT",
-      headers: {
-        Authorization: "Bearer " + token,
-        "Content-Type": "application/json",
+    putToto(
+      {
+        url: `${REQUEST_URL}/todos/${id}`,
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: { isCompleted: checked, todo: enteredTodo },
       },
-      body: { isCompleted: checked, todo: enteredTodo },
-    });
+      modifyTodoItem,
+      id
+    );
   };
 
   let firstButton, secondButton;
