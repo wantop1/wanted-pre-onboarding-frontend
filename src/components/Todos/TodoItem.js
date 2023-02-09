@@ -1,22 +1,24 @@
 import { useState } from "react";
 import MainButton from "../UI/Button/MainButton";
 import classes from "./TodoItem.module.css";
+import useHttp from "../../hooks/use-http";
 const REQUEST_URL = "https://pre-onboarding-selection-task.shop";
+
 const TodoItem = (props) => {
   const token = localStorage.getItem("token");
+  const { error, sendRequest: deleteTodo } = useHttp();
+
   const [checked, setChecked] = useState(props.isCompleted);
-  const [error, setError] = useState();
   const [editable, setEditable] = useState(false);
   const [todo, setTodo] = useState(props.todo);
 
   const editTodoHandler = () => {
-    if(editable) {
+    if (editable) {
       setChecked(props.isCompleted);
       setTodo(props.todo);
     }
 
     setEditable(!editable);
-
   };
 
   const checkboxHandler = () => {
@@ -31,27 +33,17 @@ const TodoItem = (props) => {
   };
 
   const deleteTodoHandler = async () => {
-    setError(null);
-
-    try {
-      const response = await fetch(`${REQUEST_URL}/todo/${props.id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("delete todo failed!");
-      }
-    } catch (error) {
-      setError(error.message);
-      return;
-    }
+    deleteTodo({
+      url: `${REQUEST_URL}/todos/${props.id}`,
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
   };
 
   const modifyTodohandler = async () => {
-    setError(null);
+
     try {
       const response = await fetch(`${REQUEST_URL}/todos/${props.id}`, {
         method: "PUT",
@@ -59,14 +51,14 @@ const TodoItem = (props) => {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ "isCompleted": checked, "todo": todo }),
+        body: JSON.stringify({ isCompleted: checked, todo: todo }),
       });
 
       if (!response.ok) {
         throw new Error("modify todo failed!");
       }
     } catch (error) {
-      setError(error.message);
+
       return;
     }
   };
