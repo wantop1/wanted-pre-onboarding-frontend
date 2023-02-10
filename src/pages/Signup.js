@@ -6,6 +6,7 @@ import MainButton from "../components/UI/Button/MainButton";
 import LoadingSpinner from "../components/UI/Progress/LodingSpinner";
 import { EMAIL_INPUT_ERROR,PASSWORD_INPUT_ERROR } from "../constants/error-messages";
 import { REQUEST_URL } from "../constants/paths";
+import { SIGNUP_SUCCESS } from "../constants/success-message";
 
 const Signup = () => {
   const history = useHistory();
@@ -50,22 +51,21 @@ const Signup = () => {
 
     setLoading(true);
 
-    const signupData = {
-      email: enteredEmail,
-      password: enteredPassword,
-    };
-
     try {
       const response = await fetch(`${REQUEST_URL}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(signupData),
+        body: JSON.stringify({
+          email: enteredEmail,
+          password: enteredPassword,
+        }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message);
       } else {
+        alert(SIGNUP_SUCCESS);
         history.replace("/signin");
       }
     } catch (error) {
