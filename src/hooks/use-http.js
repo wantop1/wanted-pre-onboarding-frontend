@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
-
+import {HTTP_REQUEST_ERROR, UNEXPECTED_ERROR} from "../constants/error-messages";
+ 
 const useHttp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -15,7 +16,7 @@ const useHttp = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Request failed!");
+        throw new Error(HTTP_REQUEST_ERROR);
       }
 
       if (requestConfig.method === "GET" || requestConfig.method === "POST") {
@@ -32,7 +33,7 @@ const useHttp = () => {
         applyData(id,data);
       }
     } catch (err) {
-      setError(err.message || "Something went wrong!");
+      setError(err.message || UNEXPECTED_ERROR);
     }
     setIsLoading(false);
   }, []);

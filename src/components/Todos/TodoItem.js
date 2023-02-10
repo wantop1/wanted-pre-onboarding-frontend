@@ -2,7 +2,7 @@ import { useState } from "react";
 import MainButton from "../UI/Button/MainButton";
 import classes from "./TodoItem.module.css";
 import useHttp from "../../hooks/use-http";
-const REQUEST_URL = "https://pre-onboarding-selection-task.shop";
+import { REQUEST_URL } from "../../constants/paths";
 
 const TodoItem = ({ id, todo, isCompleted, setTodos }) => {
   const token = localStorage.getItem("token");

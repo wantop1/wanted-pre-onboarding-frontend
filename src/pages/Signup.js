@@ -4,10 +4,8 @@ import MainForm from "../components/UI/Form/MainForm";
 import MainInput from "../components/UI/Input/MainInput";
 import MainButton from "../components/UI/Button/MainButton";
 import LoadingSpinner from "../components/UI/Progress/LodingSpinner";
-
-const EMAIL_INPUT_ERROR = "이메일에는 @가 포함되어야 합니다.";
-const PASSWORD_INPUT_ERROR = "비밀번호의 길이는 8자 이상이어야 합니다.";
-const REQUEST_URL = "https://pre-onboarding-selection-task.shop";
+import { EMAIL_INPUT_ERROR,PASSWORD_INPUT_ERROR } from "../constants/error-messages";
+import { REQUEST_URL } from "../constants/paths";
 
 const Signup = () => {
   const history = useHistory();

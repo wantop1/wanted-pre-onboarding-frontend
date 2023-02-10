@@ -3,8 +3,8 @@ import LoadingSpinner from "../UI/Progress/LodingSpinner";
 import MainInput from "../UI/Input/MainInput";
 import MainButton from "../UI/Button/MainButton";
 import useHttp from "../../hooks/use-http";
+import { REQUEST_URL } from "../../constants/paths";
 
-const REQUEST_URL = "https://pre-onboarding-selection-task.shop";
 const CreateTodo = ({setTodos}) => {
   const token = localStorage.getItem("token");
   const { isLoading, error, sendRequest: postTodo } = useHttp();

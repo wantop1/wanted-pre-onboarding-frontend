@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import CreateTodo from "../components/Todos/CreateTodo";
 import TodoList from "../components/Todos/TodoList";
 import useHttp from "../hooks/use-http";
-
-const REQUEST_URL = "https://pre-onboarding-selection-task.shop";
+import { REQUEST_URL } from "../constants/paths";
 
 const Todo = () => {
   const token = localStorage.getItem("token");
