@@ -1,9 +1,20 @@
 # 원티드 프리온보딩 프론트엔드 - 선발 과제
 
 ## README.md 필수 작성 사항
-- 프로젝트의 실행 방법
-- 데모 영상 (배포 링크로 대체 가능)
-- 배포 링크
+### 프로젝트의 실행 방법
+1. 프로젝트 패키지 설치
+```
+npm install
+```
+2. 프로젝트 실행
+```
+npm start
+```
+### 데모 영상 (배포 링크로 대체 가능)
+<img src="https://user-images.githubusercontent.com/65522153/218078358-6ed5c50e-2ce8-4a81-8c83-5f807cb2913f.gif"/>
+
+### 배포 링크
+https://ghost-todo-list.netlify.app
 
 ## 과제
 ### 1. 로그인 / 회원가입
