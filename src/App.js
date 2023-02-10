@@ -17,15 +17,15 @@ const App = () => {
             <MainPage />
           </Route>
           <Route path="/signin">
-            {authCtx.isLoggedIn && <Redirect to="todo" />}
+            {authCtx.isLoggedIn && <Redirect to="/todo" />}
             {!authCtx.isLoggedIn && <Signin />}
           </Route>
           <Route path="/signup">
-            {authCtx.isLoggedIn && <Redirect to="todo" />}
+            {authCtx.isLoggedIn && <Redirect to="/todo" />}
             {!authCtx.isLoggedIn && <Signup />}
           </Route>
           <Route path="/todo">
-            {!authCtx.isLoggedIn && <Redirect to="signin" />}
+            {!authCtx.isLoggedIn && <Redirect to="/signin" />}
             {authCtx.isLoggedIn && <Todo />}
           </Route>
 
