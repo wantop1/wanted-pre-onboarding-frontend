@@ -11,7 +11,7 @@ npm install
 npm start
 ```
 ### 데모 영상 (배포 링크로 대체 가능)
-<img src="https://user-images.githubusercontent.com/65522153/218080362-c163e331-4010-425e-a5d2-8a3a6175f5ee.gif"/>
+<img width="70%" src="https://user-images.githubusercontent.com/65522153/218080362-c163e331-4010-425e-a5d2-8a3a6175f5ee.gif"/>
 
 ### 배포 링크
 https://ghost-todo-list.netlify.app
