@@ -33,7 +33,6 @@ const CreateTodo = ({setTodos}) => {
   };
   return (
     <div>
-      {isLoading && <LoadingSpinner />}
       <MainInput
         value={enteredTodo}
         type="text"
@@ -51,7 +50,8 @@ const CreateTodo = ({setTodos}) => {
       >
         추가
       </MainButton>
-      {error && <p>{error}</p>}
+      {!error && isLoading && <LoadingSpinner />}
+      {error && !isLoading && <p>{error}</p>}
     </div>
   );
 };
