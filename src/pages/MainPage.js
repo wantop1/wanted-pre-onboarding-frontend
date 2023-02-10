@@ -1,6 +1,11 @@
+import {MAIN_LOGO} from '../constants/paths';
+
 const MainPage = () => {
     return(
-        <div>main page</div>
+        <section className="main-page-section">
+            <h1>GHOST TO DO LIST</h1>
+            <div><img src={MAIN_LOGO} alt="logo"/></div>
+        </section>
     )
 }
 
