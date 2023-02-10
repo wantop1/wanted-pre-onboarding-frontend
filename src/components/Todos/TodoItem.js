@@ -19,7 +19,7 @@ const TodoItem = ({ id, todo, isCompleted, setTodos }) => {
       setEnteredTodo(todo);
     }
 
-    setEditable((editableState)=>!editableState);
+    setEditable((editableState) => !editableState);
   };
 
   const checkboxHandler = () => {
@@ -41,12 +41,12 @@ const TodoItem = ({ id, todo, isCompleted, setTodos }) => {
     setTodos((prevList) =>
       prevList.map((item) =>
         item.id === id
-          ? {...item,isCompleted: data.isCompleted, todo: data.todo }
+          ? { ...item, isCompleted: data.isCompleted, todo: data.todo }
           : item
       )
     );
 
-    setEditable((editableState)=>!editableState);
+    setEditable((editableState) => !editableState);
   };
 
   const deleteTodoHandler = async () => {
@@ -79,7 +79,7 @@ const TodoItem = ({ id, todo, isCompleted, setTodos }) => {
     );
   };
 
-  let firstButton, secondButton;
+  let firstButton, secondButton, todoContent;
 
   if (editable) {
     firstButton = (
@@ -100,6 +100,14 @@ const TodoItem = ({ id, todo, isCompleted, setTodos }) => {
         제출
       </MainButton>
     );
+
+    todoContent = (
+      <input
+        onChange={enteredTodoHandler}
+        data-testid="modify-input"
+        value={enteredTodo}
+      />
+    );
   } else {
     firstButton = (
       <MainButton
@@ -119,23 +127,17 @@ const TodoItem = ({ id, todo, isCompleted, setTodos }) => {
         삭제
       </MainButton>
     );
+
+    todoContent = (
+      <span className={`${checked ? classes.checked : ""}`}>{enteredTodo}</span>
+    );
   }
 
   return (
     <li>
       <label>
         <input onChange={checkboxHandler} type="checkbox" checked={checked} />
-        {editable ? (
-          <input
-            onChange={enteredTodoHandler}
-            data-testid="modify-input"
-            value={enteredTodo}
-          />
-        ) : (
-          <span className={`${checked ? classes.checked : ""}`}>
-            {enteredTodo}
-          </span>
-        )}
+        {todoContent}
       </label>
       {firstButton}
       {secondButton}
