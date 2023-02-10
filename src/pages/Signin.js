@@ -7,6 +7,7 @@ import AuthContext from "../store/auth-context";
 import LoadingSpinner from "../components/UI/Progress/LodingSpinner";
 import { EMAIL_INPUT_ERROR,PASSWORD_INPUT_ERROR } from "../constants/error-messages";
 import { REQUEST_URL } from "../constants/paths";
+import { SESSION_EXPIRATION_TIME } from "../constants/numbers";
 
 const Signin = () => {
   const history = useHistory();
@@ -52,16 +53,14 @@ const Signin = () => {
 
     setLoading(true);
 
-    const signinData = {
-      email: enteredEmail,
-      password: enteredPassword,
-    };
-
     try {
       const response = await fetch(`${REQUEST_URL}/auth/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(signinData),
+        body: JSON.stringify({
+          email: enteredEmail,
+          password: enteredPassword,
+        }),
       });
 
       if (!response.ok) {
@@ -69,7 +68,8 @@ const Signin = () => {
         throw new Error(errorData.message);
       } else {
         const data = await response.json();
-        authCtx.login(data.access_token);
+        const expirationTime = new Date(new Date().getTime() + SESSION_EXPIRATION_TIME);
+        authCtx.login(data.access_token,expirationTime.toISOString());
         history.push("/todo");
       }
     } catch (error) {
